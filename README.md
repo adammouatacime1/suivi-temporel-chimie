@@ -27,7 +27,7 @@ npm run build
 python3 -m http.server 8000 --directory dist
 ```
 
-KaTeX est une dépendance de construction épinglée avec lockfile. Le build copie son JavaScript, sa feuille de style, ses polices et sa licence dans `dist/vendor/katex/`. Tout le dossier `dist/` constitue le site publiable ; les chemins relatifs fonctionnent sous le sous-chemin GitHub Pages du dépôt.
+KaTeX est une dépendance de construction épinglée avec lockfile. Son JavaScript, sa feuille de style, ses polices et sa licence sont versionnés dans `vendor/katex/` pour permettre la publication directe depuis la racine. Après une mise à jour de KaTeX et du lockfile, exécuter `npm run vendor` et versionner les ressources synchronisées. Le build recopie ces ressources et le PDF dans `dist/`. Tout le dossier `dist/` constitue le site publiable ; les chemins relatifs fonctionnent sous le sous-chemin GitHub Pages du dépôt.
 
 ## Modifier le contenu
 
@@ -53,8 +53,16 @@ Il teste les largeurs 320, 375, 390, 768 et 1440 px, les 14 réponses numérique
 
 ## Publication gratuite sur GitHub Pages
 
-Le workflow `.github/workflows/pages.yml` construit et publie `dist/` à chaque push sur `main`, ou sur lancement manuel. Dans le dépôt GitHub, **Settings → Pages → Build and deployment → Source : GitHub Actions** doit être activé. Le compte doit disposer du droit de configurer Pages et Actions. Le dépôt doit être public pour bénéficier du fonctionnement gratuit standard de GitHub Pages.
+Le réglage actif est **Settings → Pages → Deploy from a branch → main → /(root)**. La racine contient directement le site complet : `index.html`, les modules, `vendor/katex/` et `docs/cours-et-corriges.pdf`. Il n’est pas nécessaire de changer ce réglage ni de construire le site pour le publier. Le dépôt doit être public pour bénéficier du fonctionnement gratuit standard de GitHub Pages.
 
-Une fois Pages activé, relancer le workflow **Publier le cours sur GitHub Pages** si son premier passage a échoué. L’URL réellement déployée est affichée par GitHub dans **Settings → Pages** et dans l’environnement `github-pages`. Aucun domaine payant n’est nécessaire.
+Chaque push sur `main` déclenche la publication GitHub Pages depuis cette racine. Le workflow `.github/workflows/pages.yml` vérifie les tests et le build, sans lancer de second déploiement. Le dossier `dist/` reste une copie autonome utile pour les tests et d’autres hébergements statiques.
 
-Une modification du contenu suivie d’un commit et d’un push sur `main` déclenche la mise à jour. Ne pas modifier directement les fichiers générés de `dist/`.
+Le bouton **PDF** et la fiche de révision ouvrent `./docs/cours-et-corriges.pdf`, une vraie ressource du site utilisable depuis un téléphone. Ce PDF est une photographie imprimable du cours ; après modification du contenu, le régénérer avec le bouton Imprimer ou le script ci-dessous, puis versionner le fichier :
+
+```sh
+# Avec le serveur local lancé et Python Playwright + Chromium disponibles :
+python3 scripts/export-pdf.py http://127.0.0.1:8000/ docs/cours-et-corriges.pdf
+npm run build
+```
+
+L’URL déployée est affichée par GitHub dans **Settings → Pages**. Aucun domaine payant n’est nécessaire. Après une modification du contenu, faire un commit puis un push sur `main` ; ne pas modifier directement les fichiers générés de `dist/`.

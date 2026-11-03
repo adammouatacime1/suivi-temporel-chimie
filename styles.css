@@ -14,3 +14,6 @@
 @media(max-width:760px){.definitions{display:block}.definitions dt{border:0;padding-bottom:0}.definitions dd{padding-top:6px}.definitions dt,.definitions dd{font-size:.89rem}}
 :root{--curve-ref:#277e79;--curve-fast:#bd5a34;--curve-third:#8070c1}:root[data-theme=dark]{--curve-ref:#70c4b5;--curve-fast:#f0af7e;--curve-third:#b9a9eb}
 [data-theme=dark] #course-content svg [stroke="#128675"]{stroke:#70c4b5}
+.pdf-button{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:44px;padding:8px 13px;border:1px solid var(--line);border-radius:6px;background:var(--surface);font-size:.78rem;font-weight:650;text-decoration:none;color:var(--green)}.pdf-button:hover{background:var(--tint)}
+@media(max-width:380px){.topbar .brand small{display:none}.topbar .brand-icon{display:none}.topbar .brand{font-size:1.05rem}.topbar{padding-left:12px;padding-right:12px}}
+@media print{.pdf-button{display:none!important}}

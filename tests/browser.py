@@ -22,6 +22,10 @@ with sync_playwright() as p:
     page.goto(URL,wait_until='networkidle')
     assert page.locator('.katex').count() > 500
     assert page.locator('.katex-error').count() == 0
+    pdf = page.request.get(URL + 'docs/cours-et-corriges.pdf')
+    assert pdf.status == 200 and 'application/pdf' in pdf.headers.get('content-type','')
+    assert pdf.body().startswith(b'%PDF-')
+    assert page.locator('a.pdf-button').count() >= 2
     assert page.locator('form[data-exercise]').count() == 14
     assert page.locator('.sim-card').count() == 5
     assert page.locator('details.correction[open]').count() == 0
