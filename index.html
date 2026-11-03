@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#183f36">
+  <meta name="description" content="Comprendre et réviser le suivi temporel d’une transformation chimique : cours détaillé, simulations et exercices corrigés pour la 2e Bac Sciences Mathématiques A au Maroc.">
+  <title>Cinétique — Le temps d’une réaction · 2e Bac SMA</title>
+  <script>try{document.documentElement.dataset.theme=localStorage.getItem('chimie-theme')||'light'}catch{}</script>
+  <link rel="stylesheet" href="./vendor/katex/katex.min.css">
+  <link rel="stylesheet" href="./styles.css">
+  <script defer src="./vendor/katex/katex.min.js"></script>
+  <script defer src="./vendor/katex/contrib/auto-render.min.js"></script>
+  <script type="module" src="./app.js"></script>
+</head>
+<body>
+  <a class="skip" href="#contenu">Aller au contenu</a>
+  <header class="topbar">
+    <a href="#accueil" class="brand" aria-label="Cinétique, accueil"><span class="brand-icon" aria-hidden="true">c<span>·</span></span><span>Cinétique<small>LE TEMPS D’UNE RÉACTION</small></span></a>
+    <div class="top-tools"><span class="level">2e Bac · Sciences Maths A</span><button id="theme" class="icon-button" aria-label="Activer le mode sombre" title="Changer de thème">◐</button><button id="print" class="print-button">Imprimer</button><button id="menu" class="menu-button" aria-expanded="false" aria-controls="sidebar">Sommaire ☰</button></div>
+  </header>
+  <div class="layout">
+    <aside id="sidebar" class="sidebar" aria-label="Sommaire du chapitre">
+      <div class="sidebar-inner"><p class="nav-caption">VOTRE CHAPITRE</p><nav>
+        <a href="#accueil" class="nav-home">Vue d’ensemble <span>→</span></a>
+        <a href="#bases"><span class="nav-num">01</span> La transformation</a>
+        <a href="#avancement"><span class="nav-num">02</span> L’avancement</a>
+        <a href="#quantites"><span class="nav-num">03</span> Préparer les quantités</a>
+        <a href="#suivi"><span class="nav-num">04</span> Mesurer au fil du temps</a>
+        <a href="#vitesse"><span class="nav-num">05</span> La vitesse de réaction</a>
+        <a href="#demi"><span class="nav-num">06</span> Le temps de demi-réaction</a>
+        <a href="#facteurs"><span class="nav-num">07</span> Les facteurs cinétiques</a>
+        <div class="nav-divider"></div>
+        <a href="#simulations"><span class="nav-symbol">⌁</span> Laboratoire interactif <span class="badge">5</span></a>
+        <a href="#exercices"><span class="nav-symbol">✎</span> S’entraîner <span class="badge">14</span></a>
+        <a href="#revision"><span class="nav-symbol">▤</span> Fiche de révision</a>
+        <a href="#glossaire"><span class="nav-symbol">Aa</span> Symboles & unités</a>
+        <a href="#erreurs"><span class="nav-symbol">!</span> Les pièges à éviter</a>
+      </nav>
+      <div class="progress-card"><div><strong>À votre rythme</strong><span id="progress-text">0 / 7 chapitres compris</span></div><progress id="progress" value="0" max="7">0 sur 7</progress><small>Votre progression reste sur cet appareil.</small><button id="reset-progress" class="text-button">Réinitialiser la progression</button><p id="progress-status" role="status"></p></div>
+      <p class="sidebar-note">Comprendre le sens.<br>Retrouver la méthode.<br>Puis s’entraîner.</p></div>
+    </aside>
+    <main id="contenu">
+      <section id="accueil" class="hero">
+        <div class="hero-top"><span class="pill"><span aria-hidden="true">●</span> PHYSIQUE-CHIMIE</span><span class="hero-meta">MAROC · 2e BAC SMA</span></div>
+        <div class="hero-grid"><div><p class="eyebrow">CHAPITRE DE CHIMIE · CINÉTIQUE</p><h1>Une réaction.<br>Une histoire<br><em>dans le temps.</em></h1><p class="hero-description">Suivi temporel d’une transformation chimique et vitesse de réaction. Des premières idées aux exercices du devoir, pas à pas.</p><a class="primary-button" href="#bases">Comprendre le cours <span aria-hidden="true">→</span></a></div>
+        <div class="hero-figure"><div class="figure-label"><span>OBSERVONS UNE TRANSFORMATION</span><span aria-hidden="true">→</span></div><svg viewBox="0 0 400 290" role="img" aria-labelledby="hero-chart-title"><title id="hero-chart-title">Courbe illustrative : l’avancement augmente puis approche un plateau ; sa pente diminue ici au cours du temps.</title><defs><linearGradient id="area" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#b9d6a8" stop-opacity=".4"/><stop offset="1" stop-color="#b9d6a8" stop-opacity="0"/></linearGradient></defs><g stroke="currentColor" opacity=".12"><path d="M48 62H372M48 114H372M48 166H372M48 218H372M110 45V235M180 45V235M250 45V235M320 45V235"/></g><path d="M48 55V235H375" fill="none" stroke="currentColor" opacity=".6"/><path d="M48.00 235.00 L52.02 224.40 L56.05 214.44 L60.08 205.08 L64.10 196.29 L68.12 188.03 L72.15 180.28 L76.17 172.99 L80.20 166.14 L84.22 159.71 L88.25 153.67 L92.28 148.00 L96.30 142.66 L100.33 137.66 L104.35 132.95 L108.38 128.53 L112.40 124.38 L116.42 120.48 L120.45 116.81 L124.47 113.37 L128.50 110.14 L132.53 107.10 L136.55 104.25 L140.57 101.57 L144.60 99.05 L148.62 96.68 L152.65 94.46 L156.68 92.37 L160.70 90.41 L164.72 88.57 L168.75 86.84 L172.78 85.21 L176.80 83.68 L180.82 82.25 L184.85 80.90 L188.88 79.63 L192.90 78.44 L196.93 77.33 L200.95 76.28 L204.97 75.29 L209.00 74.36 L213.03 73.49 L217.05 72.68 L221.07 71.91 L225.10 71.19 L229.12 70.51 L233.15 69.87 L237.18 69.27 L241.20 68.71 L245.22 68.18 L249.25 67.69 L253.28 67.22 L257.30 66.79 L261.32 66.37 L265.35 65.99 L269.38 65.63 L273.40 65.28 L277.43 64.96 L281.45 64.66 L285.48 64.38 L289.50 64.12 L293.52 63.87 L297.55 63.63 L301.57 63.41 L305.60 63.21 L309.62 63.01 L313.65 62.83 L317.68 62.66 L321.70 62.50 L325.73 62.35 L329.75 62.20 L333.77 62.07 L337.80 61.94 L341.82 61.83 L345.85 61.72 L349.88 61.61 L353.90 61.51 L357.93 61.42 L361.95 61.34 L365.98 61.26 L370.00 61.18L370 235Z" fill="url(#area)"/><path d="M48.00 235.00 L52.02 224.40 L56.05 214.44 L60.08 205.08 L64.10 196.29 L68.12 188.03 L72.15 180.28 L76.17 172.99 L80.20 166.14 L84.22 159.71 L88.25 153.67 L92.28 148.00 L96.30 142.66 L100.33 137.66 L104.35 132.95 L108.38 128.53 L112.40 124.38 L116.42 120.48 L120.45 116.81 L124.47 113.37 L128.50 110.14 L132.53 107.10 L136.55 104.25 L140.57 101.57 L144.60 99.05 L148.62 96.68 L152.65 94.46 L156.68 92.37 L160.70 90.41 L164.72 88.57 L168.75 86.84 L172.78 85.21 L176.80 83.68 L180.82 82.25 L184.85 80.90 L188.88 79.63 L192.90 78.44 L196.93 77.33 L200.95 76.28 L204.97 75.29 L209.00 74.36 L213.03 73.49 L217.05 72.68 L221.07 71.91 L225.10 71.19 L229.12 70.51 L233.15 69.87 L237.18 69.27 L241.20 68.71 L245.22 68.18 L249.25 67.69 L253.28 67.22 L257.30 66.79 L261.32 66.37 L265.35 65.99 L269.38 65.63 L273.40 65.28 L277.43 64.96 L281.45 64.66 L285.48 64.38 L289.50 64.12 L293.52 63.87 L297.55 63.63 L301.57 63.41 L305.60 63.21 L309.62 63.01 L313.65 62.83 L317.68 62.66 L321.70 62.50 L325.73 62.35 L329.75 62.20 L333.77 62.07 L337.80 61.94 L341.82 61.83 L345.85 61.72 L349.88 61.61 L353.90 61.51 L357.93 61.42 L361.95 61.34 L365.98 61.26 L370.00 61.18" fill="none" stroke="#c0dfa9" stroke-width="4"/><path d="M83 146.38L177 71.48" stroke="#f5bf85" stroke-width="2" stroke-dasharray="6 5"/><circle cx="127" cy="111.32" r="7" fill="#f5bf85" stroke="#183f36" stroke-width="3"/><text x="10" y="30" fill="currentColor" font-size="13">Avancement x</text><text x="281" y="269" fill="currentColor" font-size="13">Temps t →</text><text x="244" y="49" fill="#c0dfa9" font-size="13">plateau : x tend vers x<tspan baseline-shift="sub" font-size="10">f</tspan></text><text x="154" y="165" fill="#f5bf85" font-size="12">la pente raconte</text><text x="154" y="183" fill="#f5bf85" font-size="12">la vitesse</text><text x="36" y="253" fill="currentColor" font-size="12">0</text></svg><p>La quantité transformée se lit en hauteur.<br><strong>La rapidité se lit dans la pente.</strong></p><span class="figure-foot">SCHÉMA QUALITATIF · MODÈLE ILLUSTRATIF</span></div></div>
+        <div class="hero-bottom"><span><strong>07</strong> étapes pour comprendre</span><span><strong>05</strong> simulations à manipuler</span><span><strong>14</strong> exercices & problèmes corrigés</span></div>
+      </section>
+      <section class="paths" aria-label="Choisir un parcours"><a href="#bases" class="path-card"><span class="path-icon">01 /</span><div><small>JE REPRENDS DEPUIS LE DÉBUT</small><h2>Comprendre le cours</h2><p>Suivez les 7 étapes, essayez les exemples, puis manipulez les modèles.</p></div><span aria-hidden="true">→</span></a><a href="#revision" class="path-card revision-path"><span class="path-icon">02 /</span><div><small>MON DEVOIR APPROCHE</small><h2>Réviser avant le devoir</h2><p>Retrouvez les essentiels, une méthode de résolution et les exercices prioritaires.</p></div><span aria-hidden="true">→</span></a></section>
+      <div class="reading-note"><span aria-hidden="true">↳</span><p><strong>Un carnet de travail, pas une liste de formules.</strong> Pour chaque idée : comprendre, démontrer, calculer, puis essayer seul. Les corrigés s’ouvrent à votre demande. Tout fonctionne sans compte.</p></div>
+      <div id="course-content"></div>
+      <div id="simulation-content"></div>
+      <div id="exercise-content"></div>
+      <div id="revision-content"></div>
+      <footer><a class="brand" href="#accueil">Cinétique <span aria-hidden="true">→</span></a><p>Un chapitre pour comprendre le temps d’une réaction.<br>2e Bac Sciences Mathématiques A · Maroc</p><p>Progression enregistrée uniquement dans votre navigateur.<br>Aucun compte, aucune donnée personnelle collectée.</p><a href="#accueil">Revenir au début ↑</a></footer>
+    </main>
+  </div>
+  <noscript><p>Activez JavaScript pour afficher le cours et ses simulations. Ce site exécute uniquement des calculs locaux.</p></noscript>
+</body>
+</html>
