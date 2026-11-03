@@ -105,3 +105,5 @@ Vérifications du 3 novembre 2026 :
 Ces essais sont effectués dans Chromium avec des dimensions de téléphone ; ils ne constituent pas un essai sur un iPhone physique avec Safari. Le dépôt de diffraction est resté inchangé.
 
 Les rares formules inline plus longues que la colonne passent dans un défilement local accessible au clavier, recalculé à l’ouverture des corrigés et au redimensionnement. Aucune expression n’est raccourcie. Les liens directs aux sections sont repositionnés après le chargement des polices pour conserver les ancres sous l’en-tête.
+
+Le workflow de livraison lit le mode GitHub Pages existant et actualise uniquement ce mode (branche configurée ou Actions). Il ne change ni les paramètres Pages, ni le domaine, ni les URL ; cette relance évite de laisser le site sur le commit précédent alors que les vérifications ont réussi.

@@ -5,9 +5,15 @@ on:
   workflow_dispatch:
 permissions:
   contents: read
+  pages: write
+concurrency:
+  group: chemistry-publication
+  cancel-in-progress: true
 jobs:
   validate:
     runs-on: ubuntu-latest
+    outputs:
+      pages_type: ${{ steps.pages.outputs.type }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -17,5 +23,46 @@ jobs:
       - run: npm ci
       - run: npm test
       - run: npm run build
-# La publication est gérée par GitHub Pages : main / (root).
-# Aucun déploiement concurrent à partir de dist/.
+      - name: Lire le mode Pages existant
+        id: pages
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh api "repos/$GITHUB_REPOSITORY/pages" > "$RUNNER_TEMP/pages-metadata.json"
+          kind="$(jq -r .build_type "$RUNNER_TEMP/pages-metadata.json")"
+          case "$kind" in legacy|workflow) ;; *) exit 1 ;; esac
+          echo "type=$kind" >> "$GITHUB_OUTPUT"
+          jq '{build_type, status, html_url, source}' "$RUNNER_TEMP/pages-metadata.json"
+      - name: Actualiser la publication depuis la branche configurée
+        if: steps.pages.outputs.type == 'legacy'
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          if [ "$(jq -r .status "$RUNNER_TEMP/pages-metadata.json")" = building ]; then
+            echo 'Une publication de branche est déjà en cours.'
+          else
+            gh api --method POST "repos/$GITHUB_REPOSITORY/pages/builds" --jq '{status}'
+          fi
+      - uses: actions/configure-pages@v5
+        if: steps.pages.outputs.type == 'workflow'
+      - uses: actions/upload-pages-artifact@v3
+        if: steps.pages.outputs.type == 'workflow'
+        with:
+          path: dist
+  deploy:
+    if: needs.validate.outputs.pages_type == 'workflow'
+    needs: validate
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
+# Le mode, la branche, le dossier source et l'URL du site restent inchangés.
+# Une seule voie de publication est utilisée, selon le mode déjà configuré.

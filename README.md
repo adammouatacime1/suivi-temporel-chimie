@@ -67,7 +67,7 @@ Il teste les largeurs 320, 375, 390, 768 et 1440 px, les 14 réponses numérique
 
 Le réglage actif est **Settings → Pages → Deploy from a branch → main → /(root)**. La racine contient directement le site complet : `index.html`, les modules, `vendor/katex/` et `docs/cours-et-corriges.pdf`. Il n’est pas nécessaire de changer ce réglage ni de construire le site pour le publier. Le dépôt doit être public pour bénéficier du fonctionnement gratuit standard de GitHub Pages.
 
-Chaque push sur `main` déclenche la publication GitHub Pages depuis cette racine. Le workflow `.github/workflows/pages.yml` vérifie les tests et le build, sans lancer de second déploiement. Le dossier `dist/` reste une copie autonome utile pour les tests et d’autres hébergements statiques.
+Chaque push sur `main` déclenche la publication GitHub Pages depuis cette racine. Le workflow `.github/workflows/pages.yml` vérifie les tests et le build, puis lit le mode Pages existant sans le modifier. En mode branche, il demande une actualisation de cette même publication si aucune construction n’est déjà en cours. Si le propriétaire a choisi GitHub Actions, il publie `dist/` dans ce mode. Les deux voies sont exclusives : aucun changement de branche, de dossier source ou d’URL n’est effectué. Le dossier `dist/` reste une copie autonome utile pour les tests et d’autres hébergements statiques.
 
 Le bouton **PDF** et la fiche de révision ouvrent `./docs/cours-et-corriges.pdf`, une vraie ressource du site utilisable depuis un téléphone. Ce PDF est une photographie imprimable du cours ; après modification du contenu, le régénérer avec le bouton Imprimer ou le script ci-dessous, puis versionner le fichier :
 
