@@ -29,6 +29,18 @@ python3 -m http.server 8000 --directory dist
 
 KaTeX est une dépendance de construction épinglée avec lockfile. Son JavaScript, sa feuille de style, ses polices et sa licence sont versionnés dans `vendor/katex/` pour permettre la publication directe depuis la racine. Après une mise à jour de KaTeX et du lockfile, exécuter `npm run vendor` et versionner les ressources synchronisées. Le build recopie ces ressources et le PDF dans `dist/`. Tout le dossier `dist/` constitue le site publiable ; les chemins relatifs fonctionnent sous le sous-chemin GitHub Pages du dépôt.
 
+## Design du laboratoire
+
+Le site reprend le kit de `adammouatacime1/diffraction-lab-3d`, branche `livraison-diffraction-lab-3d`, révision `b11607e208d996535705630ee71d9bcd30e64857`. La feuille canonique `design-kit/src/styles.css` est copiée sans modification ; `styles.css` contient uniquement l’adaptation au cours, aux schémas SVG et à la lecture longue. Les composants sont portés en HTML dans la stack existante, sans React supplémentaire. Les icônes SVG locales sont celles de Lucide 0.468.0 (licence conservée).
+
+La [note d’intégration](docs/design-kit-integration.md) précise les correspondances et les accommodations de contraste, de taille de lecture et de zones tactiles. Pour contrôler une mise à jour après construction et démarrage du serveur :
+
+```sh
+python3 tests/design.py http://127.0.0.1:8000/ --output /tmp/chimie-design-checks
+```
+
+Ce contrôle compare les textes, formules, légendes et paramètres avec le commit antérieur `b2e9f41` (historique Git nécessaire), vérifie les tokens du kit, les deux thèmes, les contrastes, les cibles tactiles et la navigation clavier. Pour joindre les captures de référence au rapport, passer `--kit /chemin/vers/diffraction-lab-3d/design-kit` avec une copie en lecture du dépôt source. Le contenu scientifique reste dans ses modules d’origine.
+
 ## Modifier le contenu
 
 - `course.js` : les sept chapitres, exemples et schémas SVG.
